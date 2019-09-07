@@ -1,0 +1,5 @@
+Cenário 1:
+	email: a' or 'a' = 'a' limit 1; -- 
+	
+Cenário 2:
+	email: allexxrodrguess@gmail.com'; -- 

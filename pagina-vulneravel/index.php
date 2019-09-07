@@ -2,10 +2,47 @@
 	$status = [];
 	$status['error'] = false;
 	$status['msg'] = '';
+	$status['sql'] = '';
+	
+	$host = 'localhost';
+	$user = 'root';
+	$password = 'root';
+	$database = 'sql_injection';
 
 	if(isset($_POST['submit'])) {
 		if(isset($_POST['email']) && isset($_POST['password'])) {
 			
+			$email = $_POST['email'];
+			$pass = $_POST['password'];
+			
+			$connection = mysqli_connect($host, $user, $password, $database); 
+			
+			if($connection) {
+				$sql = "select id from users_insecure where email = '" . $email . "' and password = '" . hash('sha256', $pass) . "';";
+				$status['sql'] = $sql;
+				$res = mysqli_query($connection, $sql);
+
+				if($res) {
+					if($res->num_rows > 0) {
+						$status['error'] = false;
+						$status['msg'] = "Usuário encontrado.";
+					}
+					else {
+						$status['error'] = true;
+						$status['msg'] = "Usuário não encontrado.";
+					}
+				}
+				else {
+					$status['error'] = true;
+					$status['msg'] = "Falha ao executar instrução: " . mysqli_error($connection);
+				}
+				
+				mysqli_close($connection);
+			}
+			else {
+				$status['error'] = true;
+				$status['msg'] = "Falha na conexão: " . mysqli_connect_error();
+			}
 		}
 		else {
 			$status['error'] = true;
@@ -28,12 +65,18 @@
 </head>
 
 <body>
+	<?php
+	if($status['sql'] != '') { ?>
+		<p class="alert alert-info"><strong>SQL: </strong> <?php echo $status['sql'] ?></p> <?php
+	}
+	?>
+
     <form class="col-md-4 offset-md-4" action="index.php" method="POST">
 		<h1>Acessar</h1>
 	
 		<div class="form-group">
 			<label for="exampleInputEmail1">E-mail</label>
-			<input type="email" name="email" class="form-control" required>
+			<input type="text" name="email" class="form-control" required value="<?php echo $_POST['email'] ?? '' ?>">
 		</div>
 		
 		<div class="form-group">
