@@ -21,7 +21,7 @@
 				$status["error"] = true;
 				$status["msg"] = "Falha na conexão.";
 			} else {
-				$query = "select id from usuario where email = ? and senha = ?";
+				$query = "select id from user_secure where email = ? and password = ?";
 				$stmt = $mysqli->prepare($query);
 
 				if ($stmt) {
