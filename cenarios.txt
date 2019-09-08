@@ -1,0 +1,14 @@
+Antes de executar os cenários, executar os seguintes passos:
+1. No MySQL, realizar as seguintes configurações:
+	SET global general_log = 1;
+	SET global log_output = 'table';
+	Obs.: não se deve substituir a string 'table' pelo nome de outra tabela.
+2. Realizar a consulta select * from mysql.general_log;
+
+Cenário 1:
+	email: a' or 'a' = 'a' limit 1; -- 
+	Também é possível verificar a consulta na tabela general_log (select * from mysql.general_log;)
+	
+Cenário 2:
+	email: allexxrodrguess@gmail.com'; -- 
+	Também é possível verificar a consulta na tabela general_log (select * from mysql.general_log;)
