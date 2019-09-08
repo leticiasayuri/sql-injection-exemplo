@@ -1,6 +1,6 @@
 <?php
 	$status = [];
-	$status["erro"] = false;
+	$status["error"] = false;
 	$status["msg"] = "";
 	$status["sql"] = "";
 
@@ -18,7 +18,7 @@
 			$mysqli = new mysqli($mysql_host, $mysql_usuario, $mysql_senha, $mysql_db);
 
 			if ($mysqli->connect_errno) {
-				$status["erro"] = true;
+				$status["error"] = true;
 				$status["msg"] = "Falha na conexão.";
 			} else {
 				$query = "select id from usuario where email = ? and senha = ?";
@@ -30,19 +30,22 @@
 					$stmt->store_result();
 
 					if ($stmt->num_rows > 0) {
-						$status["erro"] = false;
+						$status["error"] = false;
 						$status["msg"] = "Usuário encontrado";
 					} else {
-						$status["erro"] = true;
+						$status["error"] = true;
 						$status["msg"] = "Usuário não encontrado";
 					}
 				} else {
-					$status["erro"] = "Falha ao executar instrução: ".$stmt->error;
+					$status["error"] = "Falha ao executar instrução: ".$stmt->error;
 				}
 
 				$stmt->close();
 				$mysqli->close();
 			}
+		} else {
+			$status["error"] = true;
+			$status["msg"] = "Email e/ou senha devem ser informados.";
 		}
 	}
 ?>
@@ -83,7 +86,7 @@
 			
 			<?php
 				if($status["msg"] != "") {
-					if($status["erro"]) { ?>
+					if($status["error"]) { ?>
 						<p class="alert alert-danger"><strong>Falha no login.</strong> <?php echo $status["msg"] ?></p> <?php
 					}
 					else{ ?>

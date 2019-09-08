@@ -46,7 +46,7 @@
 		}
 		else {
 			$status['error'] = true;
-			$status['msg'] = 'Email\senha devem ser informados.';
+			$status['msg'] = 'Email e/ou senha devem ser informados.';
 		}
 	}
 ?>
