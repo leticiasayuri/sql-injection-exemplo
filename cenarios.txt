@@ -10,5 +10,5 @@ Cenário 1:
 	Também é possível verificar a consulta na tabela general_log (select * from mysql.general_log;)
 	
 Cenário 2:
-	email: allexxrodrguess@gmail.com'; -- 
+	email: allexxrodriguess@gmail.com'; -- 
 	Também é possível verificar a consulta na tabela general_log (select * from mysql.general_log;)
